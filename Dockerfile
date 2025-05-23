@@ -1,19 +1,12 @@
-FROM node:20-slim
+FROM python:3.9-slim
 
-# Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install app dependencies
-RUN npm install
+COPY main.py .
 
-# Copy application code
-COPY . .
-
-# Expose the port the app runs on
 EXPOSE 8080
 
-# Command to run the application
-CMD ["node", "server.js"]
+CMD ["python", "main.py"]
